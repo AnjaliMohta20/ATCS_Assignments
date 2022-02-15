@@ -1,0 +1,65 @@
+
+-------Ques1-------
+Create a priorityQueue class add elements and print the values.
+import java.util.Iterator;
+import java.util.PriorityQueue;
+
+public class PriorityQEx {
+public static void main(String[] args) {
+	
+	PriorityQueue<String> pq= new  PriorityQueue<String>();
+	
+	pq.add("anjali");
+	pq.add("vedika");
+	pq.add("yakshesh");
+	pq.add("mudit");
+	pq.add("aakash");
+	
+	System.out.println("head:"+pq.element());
+	System.out.println(pq);
+  }
+  }
+-------Ques2-------
+Create a of HasSet add the heterogenous objects print all the objects.
+import java.util.HashSet;
+
+public class HashSetEx {
+public static void main(String[] args) {
+	HashSet h=new HashSet();
+	h.add(1);
+	h.add(2.9f);
+	h.add(3.09);
+	h.add("Hii");
+	System.out.println(h);
+}
+}
+-------Ques3-------
+Create a of Linked HashSet add the heterogenous objects print all the objects.
+import java.util.LinkedHashSet;
+
+public class LinkedHashSetEx {
+public static void main(String[] args) {
+	LinkedHashSet lh=new LinkedHashSet();
+	lh.add("Hii!");
+	lh.add(12);
+	lh.add(12);
+	lh.add(true);
+	System.out.println(lh);
+}
+}
+
+-------Ques4-----
+By using Generics create Tree Set and print the all the values.
+import java.util.TreeSet;
+
+public class TreeSetEx {
+public static void main(String[] args) {
+	TreeSet <Character>ts=new TreeSet();
+	ts.add('e');
+	ts.add('a');
+	ts.add('b');
+	ts.add('d');
+	ts.add('c');
+	System.out.println(ts);
+}
+}
