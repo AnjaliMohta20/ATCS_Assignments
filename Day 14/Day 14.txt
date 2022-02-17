@@ -1,0 +1,110 @@
+                                                         --*--*--*--Session 1--*--*--*--                                                         
+                                                         
+------Ques1-------
+create a class and with divide two numbers by using Scanner class.(z=a/b).without try catch
+
+import java.util.Scanner;
+
+public class Divide {
+public static void main(String[] args) {
+	Scanner sc=new Scanner(System.in);
+	System.out.println("Enter two numbers");
+	int a=sc.nextInt();
+	int b=sc.nextInt();
+	int div=a/b;
+	System.out.println("Divide of two nos "+div);
+}
+}
+---------Ques2-------
+create a class and take the input from by using scanner class, as a end user take two numbers with division and observe which type of exception raised. and apply try catch blocks
+import java.util.Scanner;
+
+public class DivideTryCatch {
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter two numbers");
+		int a=sc.nextInt();
+		int b=sc.nextInt();
+		try {
+		int div=a/b;
+		System.out.println("Divide of two nos "+div);}
+		catch(ArithmeticException ae){
+			System.out.println("Please enter valid denominator");
+		}
+		
+}}
+
+
+-------Ques3------
+Create a class with single try multi catch block
+public class MultiCatch {
+public static void main(String[] args) {
+	try {
+	int arr[]=new int[10];
+	arr[10]=20/10;
+	arr[0]=9/0;
+	System.out.println(arr[10]);
+	}
+	catch(ArithmeticException ae) {
+		System.out.println("cannot divide by zero");
+	}
+	catch(ArrayIndexOutOfBoundsException ab) {
+		System.out.println("please enter valid index");
+	}
+	catch(Exception e) {
+		System.out.println("there is an exception");
+	}
+	finally {
+		System.out.println("program is executed");
+	}
+} 
+}
+                                                                       --*--*--*--Session 2--*--*--*--
+                                                                       
+ ----------Ques1--------
+ create a class with user defined exceptions.
+ 
+ package exceptionHandling;
+
+class MyException extends Exception{
+	int a;
+	public  MyException(int a) {
+		this.a=a;
+	}
+	
+	public String toString() {
+		return "This is user defined exception";
+	}
+}
+public class UserException {
+
+	void add(int a) throws MyException {
+		throw new MyException(a);
+	}
+	public static void main(String[] args) throws MyException {
+		UserException u=new UserException();
+		u.add(90);
+	}
+}
+
+ 
+ ---------Ques2-------
+ Create a class with Marks, and valid Marks method, give some number marks are less than he/she fails otherwise pass by using throw keyword.
+ 
+ package exceptionHandling;
+
+public class Marks {
+public void validMarks(int marks) {
+	if (marks>40) {
+		throw new ArithmeticException("You passed the exam!");
+	}
+	else {
+		
+		System.out.println("You failed the exam!");
+	}
+}
+public static void main(String[] args) {
+	Marks m=new Marks();
+	m.validMarks(45);
+}
+}
