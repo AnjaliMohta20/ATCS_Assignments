@@ -1,0 +1,164 @@
+                                                                    --*--*--*--Session 1--*--*--*--
+
+
+
+-------Ques1-----
+Create a Thread by extending the Thread class.
+
+package multiThreading;
+class ThreadClass extends Thread{
+
+	public void run() {
+		System.out.println("Child Thread");
+	}}
+public class MyThread {
+public static void main(String[] args) {
+	ThreadClass t=new ThreadClass();
+	t.start();
+	System.out.println("Main Thread");
+	
+}
+}
+
+
+------Ques2------
+Create a Thread by Implements the Runnable Interface.
+package multiThreading;
+
+class RunnableTheard implements Runnable{
+	public void run() {
+		for(int i=0;i<5;i++) {
+			System.out.println("In Runnable child thread");
+		}
+	}
+}
+public class RunnableTh {
+	public static void main(String[] args) {
+	RunnableTheard rt=new RunnableTheard();
+	Thread t=new Thread(rt);
+	t.start();
+	}
+}
+
+
+-------Ques3------
+Create a Thread by extending Thread class set and get the name of thread.
+package multiThreading;
+
+class ThreadClass1 extends Thread{
+
+	public void run() {
+		System.out.println("Child Thread");
+		System.out.println("Before Set Name "+Thread.currentThread().getName());
+		Thread.currentThread().setName("Hello");
+		System.out.println(Thread.currentThread().getName());
+	}
+	
+	
+}
+public class ThreadGetName  {
+public static void main(String[] args) {
+	ThreadClass1 t=new ThreadClass1();
+	t.start();
+	System.out.println("In Main Thread:"+t.currentThread().getName());
+}
+}
+
+
+-----Ques4-------
+Create a Thread by extending Thread class set and get the priority of thread.
+package multiThreading;
+
+class ThreadClass2 extends Thread{
+
+	public void run() {
+		System.out.println("Child Thread"+Thread.currentThread().getPriority());
+	}
+	
+}
+public class ThreadPrority {
+	public static void main(String[] args) {
+		ThreadClass2 t=new ThreadClass2();
+		t.start();
+	    System.out.println("Main Thread before set priority:"+Thread.currentThread().getPriority());
+	   Thread.currentThread().setPriority(3);
+	    System.out.println("Main Thread after set priority:"+Thread.currentThread().getPriority());
+}
+}
+
+
+-----Ques5--------
+Create a Thread by extending Thread class apply Yield Method.
+package multiThreading;
+
+class ThreadClass3 extends Thread{
+
+	public void run() {
+		for(int i=0;i<5;i++) {
+			System.out.println("Child Thread");
+			
+		}
+	}
+	
+}
+public class ThreadYeild {
+public static void main(String[] args) {
+	ThreadClass3 t=new ThreadClass3();
+	t.start();
+	Thread.yield();
+	for(int i=0;i<5;i++) {
+		System.out.println("Main Thread");
+		
+	}
+}
+}
+
+
+-----Ques6-----
+Create a Thread by extending Thread class apply join Method.
+package multiThreading;
+
+class ThreadClass4 extends Thread{
+
+	public void run() {
+		for(int i=0;i<5;i++) {
+			System.out.println("Child Thread");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+}
+
+public class ThreadJoin {
+public static void main(String[] args) throws InterruptedException {
+	ThreadClass4 t=new ThreadClass4();
+	t.start();
+	t.join(1000);
+	for(int i=0;i<5;i++) {
+		System.out.println("Main Thread");
+		Thread.yield();
+	}
+}
+}
+
+-----Ques7
+Create a Thread by extending Thread class apply sleep Method.
+package multiThreading;
+
+public class ThreadSleep  {
+public static void main(String[] args) {
+	for(int i=0;i<5;i++) {
+	System.out.println("--Hello!--");
+	try {
+		Thread.sleep(1000);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}}
+}
+}
