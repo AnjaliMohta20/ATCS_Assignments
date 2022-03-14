@@ -1,0 +1,166 @@
+
+                                           =====Regular Expression======
+----Matcher Class---
+package regularExpression;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class PatternEx {
+public static void main(String[] args) {
+	Pattern p=Pattern.compile("aba");
+	int c=0;
+	Matcher mt=p.matcher("abacdeabaabcdeabaabadewwabffrssdabadd");
+	while(mt.find()) {
+		System.out.println(mt.start()+"-"+mt.end()+" "+mt.group());
+		c++;
+	}
+	System.out.println("No of occurence "+c);
+}
+}
+
+------Character Classes------
+package regularExpression;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class CharacterEx {
+public static void main(String[] args) {
+	Pattern p=Pattern.compile("[^0-9]");
+	Matcher mt=p.matcher("apple12nh54jd");
+	while(mt.find()) {
+		System.out.println(mt.start()+" "+mt.group());
+	}
+}
+}
+------predefined character classes----
+package regularExpression;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class CharacterEx {
+public static void main(String[] args) {Pattern p=Pattern.compile("\\s");
+    Matcher mt=p.matcher("Hello Good Morning");
+	while(mt.find()) {
+		System.out.println(mt.start()+" "+mt.group());
+	}
+}
+}
+
+----spliting string acc to given character-------
+import java.util.regex.Pattern;
+
+public class SplitEX {
+public static void main(String[] args) {
+	Pattern p=Pattern.compile("e");
+	String str[]=p.split("Hello there!");
+	for(String s1:str) {
+		System.out.println(s1);
+	}
+	
+}
+}
+----To check whether a mobile no is valid or not------
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class ValidMobNo {
+public static void main(String[] args) {
+	Pattern p=Pattern.compile("(0|91)?[7-9][0-9]{9}");
+    Matcher mt=p.matcher(args[0]);
+    if(mt.find()&& mt.group().equals(args[0])) {
+    	System.out.println("valid mobile no");
+    }
+    else
+    	System.out.println("Invalid mobile no");
+}
+}
+                                             
+                                             ------Date and Time------
+package regularExpression;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+public class DateTimeEX {
+public static void main(String[] args) {
+	LocalDate ldate=LocalDate.now();
+	LocalTime ltime=LocalTime.now();
+	LocalDateTime ldt=LocalDateTime.now();
+	System.out.println("Todays date is "+ldate);
+	System.out.println("Time rigt now "+ltime);
+	
+	//print month day year separately
+	System.out.println("Date"+ldate.getDayOfMonth());
+	System.out.println("Month"+ldate.getMonthValue());
+	
+	//printing hour minute separately
+	System.out.println(ltime.getHour());
+	System.out.println(ltime.getMinute());
+	
+	//printing date and time together
+	System.out.println(ldt);
+	
+	//printing given date and time
+	LocalDateTime dt=LocalDateTime.of(2001, 06,24, 05, 30);
+	System.out.println(dt);
+	
+	System.out.println("after 6 mon "+dt.plusMonths(6));
+	System.out.println("before 1 year "+dt.minusYears(1));
+}
+}
+
+----find time diff between 2 dates-----
+package regularExpression;
+
+import java.time.LocalDate;
+import java.time.Period;
+
+public class PeriodBetwEx {
+public static void main(String[] args) {
+	LocalDate lt =LocalDate.of(2020, 8, 16);
+	LocalDate ltoday=LocalDate.now();
+	Period per=Period.between(lt, ltoday);
+	System.out.println(per.getYears()+" year "+per.getMonths()+" months "+per.getDays()+" days");
+	
+}
+}
+
+--------Check Leap Year or not-----
+package regularExpression;
+
+import java.time.Year;
+import java.util.Scanner;
+
+public class LeapYearEx {
+public static void main(String[] args) {
+	Scanner sc=new Scanner(System.in);
+	int yr=sc.nextInt();
+	Year year=Year.of(yr);
+	if(year.isLeap())
+		System.out.println("Year is Leap Year");
+	else
+		System.out.println("Not a Leap Year");
+}
+}
+-----Zone---
+package regularExpression;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
+public class ZoneEx {
+public static void main(String[] args) {
+	ZoneId zone=ZoneId.systemDefault();
+	System.out.println("Default Zone :"+zone);
+	
+	ZoneId z=ZoneId.of("Asia/Dubai");
+	ZonedDateTime zdt=ZonedDateTime.now(z);
+	System.out.println(zdt);
+	
+}
+}

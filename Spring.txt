@@ -1,0 +1,168 @@
+--------Employee.java-------
+package com.ia.spring;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class Employee {
+private int empId;
+private String empName;
+private int empSal;
+//@Autowired
+Address address;
+
+public Employee() {
+	// TODO Auto-generated constructor stub
+}
+
+
+public int getEmpId() {
+	return empId;
+}
+
+
+public void setEmpId(int empId) {
+	this.empId = empId;
+}
+
+
+public String getEmpName() {
+	return empName;
+}
+
+
+public void setEmpName(String empName) {
+	this.empName = empName;
+}
+
+
+public int getEmpSal() {
+	return empSal;
+}
+
+
+public void setEmpSal(int empSal) {
+	this.empSal = empSal;
+}
+
+
+public Address getAddress() {
+	return address;
+}
+
+@Autowired
+public void setAddress(Address address) {
+	this.address = address;
+}
+
+
+
+
+public Employee(int empId, String empName, int empSal, Address address) {
+	super();
+	this.empId = empId;
+	this.empName = empName;
+	this.empSal = empSal;
+	this.address = address;
+}
+
+
+@Override
+public String toString() {
+	return "Employee [empId=" + empId + ", empName=" + empName + ", empSal=" + empSal + ", address=" + address + "]";
+}
+
+
+
+}
+
+-------Address.java-----------
+package com.ia.spring;
+
+public class Address {
+private int pincode;
+private String district;
+private String state;
+public Address() {
+	// TODO Auto-generated constructor stub
+}
+public int getPincode() {
+	return pincode;
+}
+public void setPincode(int pincode) {
+	this.pincode = pincode;
+}
+public String getDistrict() {
+	return district;
+}
+public void setDistrict(String district) {
+	this.district = district;
+}
+public String getState() {
+	return state;
+}
+public void setState(String state) {
+	this.state = state;
+}
+public Address(int pincode, String district, String state) {
+	super();
+	this.pincode = pincode;
+	this.district = district;
+	this.state = state;
+}
+@Override
+public String toString() {
+	return "Address [pincode=" + pincode + ", district=" + district + ", state=" + state + "]";
+}
+
+}
+
+
+----------Test.java----------
+package com.ia.spring;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+public class Test {
+
+	public static void main(String[] args) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("springCon.xml"); //using application context
+//	    Resource resource=new ClassPathResource("springCon.xml"); // using beanfactory
+//	    BeanFactory factory=new XmlBeanFactory(resource);
+	    Employee emp=(Employee) context.getBean("spring");
+	    System.out.println(emp);
+	}
+}
+
+
+-------springCon.xml-------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+        <context:annotation-config/>
+        
+<bean class="com.ia.spring.Employee" id="spring" ><!-- autowire="byName" -->
+<property name="empId" value="1001"></property>
+<property name="empName" value="Joy"></property>
+<property name="empSal" value="45000"></property>
+<!-- <property name="Address" ref="address"></property>
+  -->
+
+</bean>
+<bean class="com.ia.spring.Address" id="address">
+<property name="pincode" value="675899"></property>
+<property name="district" value="Jaipur"></property>
+<property name="state" value="Raj"></property>
+
+</bean>
+
+</beans>

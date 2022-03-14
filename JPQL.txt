@@ -1,0 +1,150 @@
+
+----------Employee.java-------
+package com.ia.employeecrud;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="empdetails") //database table name
+public class Employee {
+	@Id
+	private int empid;     //act as primary key
+	private String empname;
+	private int empsal;
+	private String empAdd;
+	
+	//getters and setters
+	public int getEmpid() {
+		return empid;
+	}
+	public void setEmpid(int empid) {
+		this.empid = empid;
+	}
+	public String getEmpname() {
+		return empname;
+	}
+	public void setEmpname(String empname) {
+		this.empname = empname;
+	}
+	public int getEmpsal() {
+		return empsal;
+	}
+	public void setEmpsal(int empsal) {
+		this.empsal = empsal;
+	}
+	public String getEmpAdd() {
+		return empAdd;
+	}
+	public void setEmpAdd(String empAdd) {
+		this.empAdd = empAdd;
+	}
+	
+  //default constructor
+	public Employee() {
+		// TODO Auto-generated constructor stub
+	}
+  
+  //param constructor
+	public Employee(int empid, String empname, int empsal, String empAdd) {
+		super();
+		this.empid = empid;
+		this.empname = empname;
+		this.empsal = empsal;
+		this.empAdd = empAdd;
+	}
+  
+	@Override
+	public String toString() {
+		return "Employee [empid=" + empid + ", empname=" + empname + ", empsal=" + empsal + ", empAdd=" + empAdd + "]";
+	}
+	
+
+}
+
+--------Test.java-------
+package com.ia.employeecrud;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+
+public class Test {
+
+	public static void main(String[] args) {
+
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("sathya");
+
+		EntityManager entity = factory.createEntityManager();
+
+
+ Employee emp= new Employee(126,"sam", 16000, "Delhi");  
+//		Employee emp1= new Employee(129,"kim", 89000, "Noida");
+//		Employee emp2= new Employee(130,"joy", 19000, "Jaipur");
+//		
+		  entity.getTransaction().begin();
+
+//     -----Inserting more than 1 rows at a time------
+//      entity.persist(emp);
+//		entity.persist(emp1);
+//		entity.persist(emp2);
+
+
+//     ------Printing employee details of given id-------		
+//     Employee emp=entity.find(Employee.class, 124);
+//     System.out.println(emp); 
+
+
+//      -----To print table data---------		
+//		TypedQuery <Employee> tyQ=entity.createQuery("Select e from Employee e",Employee.class);
+//		List<Employee> elist=tyQ.getResultList();
+//		for(Employee e:elist) {
+//			System.out.println(e.getEmpid()+" "+e.getEmpname()+" "+e.getEmpAdd()+" "+e.getEmpsal());
+//		}
+
+//	emp.setEmpAdd("jpr");
+//	emp.setEmpname("ram");
+//		emp.setEmpsal(780000);
+//		
+entity.merge(emp);
+		entity.remove(emp);
+
+		entity.getTransaction().commit();
+
+	}
+
+}
+
+----persistence.xml------
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+                      http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+  version="2.0">
+  
+	<persistence-unit name="sathya" transaction-type="RESOURCE_LOCAL">
+	
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>com.ia.employeecrudjpql.Employee</class>
+
+		<properties>
+		<!-- database properties -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/student" />
+			<property name="javax.persistence.jdbc.user" value="postgres" />
+			<property name="javax.persistence.jdbc.password" value="password" />
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			
+			<!-- hibernate properties -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="hibernate.hbm2ddl.auto" value="update"/> <!-- create/update  -->
+			<property name="hibernate.show_sql" value="true"/>
+		</properties>
+		
+	</persistence-unit>
+	
+</persistence>

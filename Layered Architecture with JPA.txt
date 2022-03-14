@@ -1,0 +1,311 @@
+
+------------com.ia.entity-------
+package com.ia.empentity;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="JPA")
+public class Employee {
+@Id
+private int empId;
+private String empName;
+private int empSal;
+private String empAdd;
+public int getEmpId() {
+	return empId;
+}
+public void setEmpId(int empId) {
+	this.empId = empId;
+}
+public String getEmpName() {
+	return empName;
+}
+public void setEmpName(String empName) {
+	this.empName = empName;
+}
+public int getEmpSal() {
+	return empSal;
+}
+public void setEmpSal(int empSal) {
+	this.empSal = empSal;
+}
+public String getEmpAdd() {
+	return empAdd;
+}
+public void setEmpAdd(String empAdd) {
+	this.empAdd = empAdd;
+}
+public Employee() {
+	// TODO Auto-generated constructor stub
+}
+public Employee(int empId, String empName, int empSal, String empAdd) {
+	super();
+	this.empId = empId;
+	this.empName = empName;
+	this.empSal = empSal;
+	this.empAdd = empAdd;
+}
+@Override
+public String toString() {
+	return "Employee [empId=" + empId + ", empName=" + empName + ", empSal=" + empSal + ", empAdd=" + empAdd + "]";
+}
+
+
+}
+
+
+
+
+
+
+---------com.ia.service------
+package com.ia.service;
+
+import com.ia.empentity.Employee;
+
+public interface EmpService {
+ 
+	
+void addEmployee(Employee e);
+void updateEmployee(Employee e);
+void deleteEmployee(Employee e);
+Employee getEmpById(int eid);
+}
+
+
+package com.ia.service;
+
+import com.ia.dao.EmployeeDao;
+import com.ia.dao.EmployeeDaoImp;
+import com.ia.empentity.Employee;
+
+
+public class EmpServiceImp implements EmpService {
+
+	
+	private EmployeeDao dao;
+	 
+	public EmpServiceImp()
+	{
+		dao= new EmployeeDaoImp();
+	}
+	 
+	@Override
+	public void addEmployee(Employee employee) {
+		
+		   dao.beginTransaction();
+            dao.addEmployee(employee);
+            dao.commitTransaction();
+		
+	}
+
+	@Override
+	public void updateEmployee(Employee employee) {
+		dao.beginTransaction();
+		dao.updateEmployee(employee);
+		dao.commitTransaction();
+		
+	}
+
+	@Override
+	public void deleteEmployee(Employee employee) {
+	dao.beginTransaction();
+	dao.deleteEmployee(employee);
+	dao.commitTransaction();
+		
+	}
+
+	@Override
+	public Employee getEmpById(int id) {
+		//no need of transaction, it read option only
+		Employee employee=dao.getEmpById(id);
+		return employee;
+	}
+
+}
+
+---------com.ia.dao---------
+package com.ia.dao;
+
+import com.ia.empentity.Employee;
+
+public interface EmployeeDao {
+
+	void addEmployee(Employee e);
+	void updateEmployee(Employee e);
+	void deleteEmployee(Employee e);
+	Employee getEmpById(int id);
+	
+	void commitTransaction();
+	void beginTransaction();
+}
+
+package com.ia.dao;
+
+
+
+
+import javax.persistence.EntityManager;
+
+import com.ia.empentity.Employee;
+
+
+
+
+public class EmployeeDaoImp implements EmployeeDao {
+
+	private EntityManager entityManager;
+
+	public EmployeeDaoImp() {
+		entityManager = JPAUtil.getEntityManager();
+	}
+
+	@Override
+	public Employee getEmpById(int id) {
+		Employee employee = entityManager.find(Employee.class, id);
+		return employee;
+	}
+
+	@Override
+	public void addEmployee(Employee employee) {
+	
+		entityManager.persist(employee);
+		
+	}
+
+	@Override
+	public void updateEmployee(Employee employee) {
+		entityManager.merge(employee);
+
+	}
+
+	@Override
+	public void deleteEmployee(Employee e) {
+		entityManager.remove(e);
+
+	}
+
+	@Override
+	public void commitTransaction() {
+	entityManager.getTransaction().commit();
+	}
+
+	@Override
+	public void beginTransaction() {
+	entityManager.getTransaction().begin();
+	}
+
+}
+
+
+
+
+JPAUtill.java
+
+package com.ia.dao;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+public class JPAUtil {
+
+	private static EntityManagerFactory factory;
+	private static EntityManager entityManager;
+	
+	static {
+		factory = Persistence.createEntityManagerFactory("a");
+	}
+	
+	public static EntityManager getEntityManager() {
+		if(entityManager==null || !entityManager.isOpen()) {
+			entityManager = factory.createEntityManager();
+		}
+		return entityManager;
+	}
+	
+}
+
+
+
+----------com.ia.client------
+package com.ia.client;
+
+import com.ia.empentity.Employee;
+import com.ia.service.EmpService;
+import com.ia.service.EmpServiceImp;
+
+public class Client {
+
+	public static void main(String[] args) {
+		
+		EmpService service= new EmpServiceImp();
+		
+		Employee employee= new Employee(111, "keerthi", 90000, "usa");
+//		
+//service.addEmployee(employee);
+	
+		
+		//added one record to the table
+//		
+//		employee=service.getEmpById(111);
+//		System.out.println("id:" +employee.getEmpId());
+//		System.out.println("name :"+employee.getEmpName());
+//		System.out.println("salary :"+employee.getEmpSal());
+		
+//update
+//		
+//		employee.setEmpName("joy");
+//		employee.setEmpAdd("hyd");
+//		employee.setEmpSal(20000);
+////		
+//   	service.updateEmployee(employee);
+//		
+		employee=service.getEmpById(111);
+		System.out.println("id:" +employee.getEmpId());
+	System.out.println("name :"+employee.getEmpName());
+		System.out.println("salary :"+employee.getEmpSal());
+		
+		
+//delete
+	//service.deleteEmployee(employee);
+	System.out.println("end of program");
+		
+	}
+}
+
+-------persistencexml-----
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+                      http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+  version="2.0">
+  
+	<persistence-unit name="a" transaction-type="RESOURCE_LOCAL">
+	
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>com.ia.empentity.Employee</class>
+		
+		<properties>
+		<!-- database properties -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/student" />
+			<property name="javax.persistence.jdbc.user" value="postgres" />
+			<property name="javax.persistence.jdbc.password" value="password" />
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			<!-- hibernate properties -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="hibernate.hbm2ddl.auto" value="update"/><!-- create/update  -->
+			<property name="hibernate.show_sql" value="true"/>
+		</properties>
+		
+	</persistence-unit>
+	
+</persistence>
